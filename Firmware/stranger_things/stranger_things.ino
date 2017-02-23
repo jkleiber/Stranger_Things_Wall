@@ -26,6 +26,9 @@ void setup()
   //pixels.begin(); 
   strip.begin();
   strip2.begin();
+
+  strip.show();
+  strip2.show();
 }
 
 void loop()
