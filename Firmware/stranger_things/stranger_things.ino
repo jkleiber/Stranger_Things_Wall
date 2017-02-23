@@ -1,24 +1,31 @@
 #include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
 
-#define PIN            2
-
-#define NUMPIXELS      30
-
+/*
 enum CHAR_LEDS {
   LR = 1, LS, LT, LU, LV, LW, LX, LY, LZ, NAN1, LQ,
   LP, LO, LN, LM, LL, LK, LJ, LI, NAN2, LA, LB, LC,
   LD, LE, LF, LG, LH
 };
+*/
+enum CHAR_LEDS {
+  LR = 0, LS, LT, LU, LV, LW, LX, LY, LZ, LQ,
+  LP, LO, LN, LM, LL, LK, LJ, LI, LA, LB, LC,
+  LD, LE, LF, LG, LH
+};
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+//Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(15, 6, NEO_RGB + NEO_KHZ400);
+Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(11, 4, NEO_RGB + NEO_KHZ400);
 
 int delayVal = 500; // delay for half a second
 
 void setup() 
 {
   Serial.begin(115200);
-  pixels.begin(); 
+  //pixels.begin(); 
+  strip.begin();
+  strip2.begin();
 }
 
 void loop()
@@ -141,10 +148,22 @@ void loop()
 
 void lightUp(CHAR_LEDS charIndex)
 {
-  pixels.setPixelColor(charIndex, pixels.Color(255,255,255));
-  pixels.show();
-  delay(delayVal);
-  pixels.setPixelColor(charIndex, pixels.Color(0,0,0));
-  pixels.show();
+  if(charIndex < 15)
+  {
+    strip.setPixelColor(charIndex, strip.Color(255,255,255));
+    strip.show();
+    delay(delayVal);
+    strip.setPixelColor(charIndex, strip.Color(0,0,0));
+    strip.show();
+  }
+  else
+  {
+    strip2.setPixelColor(charIndex-15, strip2.Color(255,255,255));
+    strip2.show();
+    delay(delayVal);
+    strip2.setPixelColor(charIndex-15, strip2.Color(0,0,0));
+    strip2.show();
+  }
+  
 }
 
