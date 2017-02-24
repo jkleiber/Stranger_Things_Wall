@@ -10,20 +10,26 @@ enum CHAR_LEDS {
 */
 
 //Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel RZ = Adafruit_NeoPixel(8, 8, NEO_RGB + NEO_KHZ400);
-Adafruit_NeoPixel AH = Adafruit_NeoPixel(9, 6, NEO_RGB + NEO_KHZ400);
+Adafruit_NeoPixel RZ = Adafruit_NeoPixel(9, 8, NEO_RGB + NEO_KHZ400);
+Adafruit_NeoPixel AH = Adafruit_NeoPixel(8, 6, NEO_RGB + NEO_KHZ400);
 Adafruit_NeoPixel QI = Adafruit_NeoPixel(9, 4, NEO_RGB + NEO_KHZ400);
 
 String decodeKey = "ABCDEFGHQPONMLKJIRSTUVWXYZ";
 
-String messages[4] = {
-  "RUN",
+String messages[10] = {
+  "RUN AWAY",
   "STRANGER THINGS",
   "LOOK BEHIND YOU",
-  "UPB COLLEGECON"
+  "UPB COLLEGECON",
+  "HELP ME",
+  "I HAVE BARB",
+  "ITS WILL",
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  "ZYXWVUTSRQPONMLKJIHGFEDCBA",
+  "ABCDEFGHQPONMLKJIRSTUVWXYZ"
 };
 
-int delayVal = 500; // delay for half a second
+int normalDelayVal = 1000; // delay for a second
 
 void setup() 
 {
@@ -40,12 +46,19 @@ void setup()
 
 void loop()
 {
-  for(int i = 0; i < 4; ++i)
+  for(int i = 0; i < 10; ++i)
   {
     for(int ii = 0; ii < messages[i].length(); ++ii)
     {
       int index = decodeKey.indexOf(messages[i][ii]);
-      lightUp(index);
+      if(i < 7)
+      {
+        lightUp(index, normalDelayVal);
+      }
+      else
+      {
+        lightUp(index, 150);
+      }
     }
 
     delay(5000);
@@ -169,7 +182,7 @@ void loop()
 }
 
 //void lightUp(CHAR_LEDS charIndex)
-void lightUp(int charIndex)
+void lightUp(int charIndex, int delayVal)
 {
   if(charIndex < 8)
   {
@@ -178,6 +191,7 @@ void lightUp(int charIndex)
     delay(delayVal);
     AH.setPixelColor(charIndex, AH.Color(0,0,0));
     AH.show();
+    delay(delayVal);
   }
   else if(charIndex >= 8 && charIndex < 17)
   {
@@ -186,6 +200,7 @@ void lightUp(int charIndex)
     delay(delayVal);
     QI.setPixelColor(charIndex-8, QI.Color(0,0,0));
     QI.show();
+    delay(delayVal);
   }
   else
   {
@@ -194,6 +209,7 @@ void lightUp(int charIndex)
     delay(delayVal);
     RZ.setPixelColor(charIndex-17, RZ.Color(0,0,0));
     RZ.show();
+    delay(delayVal);
   }
   
 }
