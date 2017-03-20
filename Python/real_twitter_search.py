@@ -6,7 +6,7 @@ Created on Sun Mar 12 19:43:25 2017
 """
 import oauth2
 import json
-#import serial
+import serial
 from time import sleep
 from credentials import *
 import re
