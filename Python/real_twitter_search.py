@@ -22,7 +22,9 @@ def oauth_req(url, key, secret, http_method="GET", post_body="", http_headers=No
     resp, content = client.request( url, method=http_method, body=post_body, headers=http_headers )
     return content
 
-serialPort = serial.Serial('/dev/ttyUSB2', 115200, timeout = 10)
+sleep(60)
+
+serialPort = serial.Serial('/dev/ttyS0', 115200, timeout = 10)
 
 #Tests serial port communication with a themed message on startup
 #serialPort.write("Welcome to the upside down")
