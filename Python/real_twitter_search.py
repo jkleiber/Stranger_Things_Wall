@@ -9,6 +9,7 @@ import json
 #import serial
 from time import sleep
 from credentials import *
+import re
 
 #tweets we have seen before
 tweet_id_list = []
@@ -21,10 +22,10 @@ def oauth_req(url, key, secret, http_method="GET", post_body="", http_headers=No
     resp, content = client.request( url, method=http_method, body=post_body, headers=http_headers )
     return content
 
-#serialPort = serial.Serial('/dev/ttyS1', 115200, timeout = 10)
+serialPort = serial.Serial('/dev/ttyUSB0', 115200, timeout = 10)
 
 #Tests serial port communication with a themed message on startup
-#serialPort.write("Welcome to the upside down")
+serialPort.write("Welcome to the upside down")
 
 #Run the program forever
 while(True):
@@ -36,22 +37,25 @@ while(True):
     
         #Iterate through all the tweets we found
         for tweet in tweets_json['statuses']:
-            #We only care about tweets we have not seen
-            if tweet['id'] not in tweet_id_list:
+            #We only care about tweets we have not seen, and we also want to ignore retweets
+            if tweet['id'] not in tweet_id_list and 'retweeted_status' not in tweet:
                 tweet_id_list.append(tweet['id']) #add tweet to list of seen tweets
-            
+                                
                 first_hashtag = tweet['text'].find('#')
                 if not first_hashtag == -1:
                     clean_text = tweet['text'][:first_hashtag]
                 else:
                     clean_text = tweet['text']
             
+                #remove urls
+                clean_text = re.sub(r"http\S+", "", clean_text)
+            
                 for character in clean_text:
                     print character
-                    #serialPort.write(character)
-                    sleep(2)
-    except Exception: #We don't care about handling errors. We cannot display them to the wall anyways
-        pass
+                    serialPort.write(character)
+                    sleep(0.75)
+    except KeyError: #We don't care about handling errors. We cannot display them to the wall anyways
+        print "Retweeted_Status not found"
     sleep(60)
                 
-#serialPort.close()
+serialPort.close()

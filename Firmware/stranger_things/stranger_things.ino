@@ -46,139 +46,37 @@ void setup()
 
 void loop()
 {
-  for(int i = 0; i < 10; ++i)
-  {
-    for(int ii = 0; ii < messages[i].length(); ++ii)
-    {
-      int index = decodeKey.indexOf(messages[i][ii]);
-      if(i < 7)
-      {
-        lightUp(index, normalDelayVal);
-      }
-      else
-      {
-        lightUp(index, 150);
-      }
-    }
-
-    delay(5000);
-  }
-  /*
+ 
   if (Serial.available() > 0)
   {
     char inchar = Serial.read();
-    switch(inchar)
-    {
-      case 'a':
-      case 'A':
-        lightUp(LA);
-        break;
-        
-      case 'b':
-      case 'B':
-        lightUp(LB);
-        break;
-      case 'c':
-      case 'C':
-        lightUp(LC);
-        break;
-      case 'd':
-      case 'D':
-        lightUp(LD);
-        break;
-      case 'e':
-      case 'E':
-        lightUp(LE);
-        break;
-      case 'f':
-      case 'F':
-        lightUp(LF);
-        break;
-      case 'g':
-      case 'G':
-        lightUp(LG);
-        break;
-      case 'h':
-      case 'H':
-        lightUp(LH);
-        break;
-      case 'i':
-      case 'I':
-        lightUp(LI);
-        break;
-      case 'j':
-      case 'J':
-        lightUp(LJ);
-        break;
-      case 'k':
-      case 'K':
-        lightUp(LK);
-        break;
-      case 'l':
-      case 'L':
-        lightUp(LL);
-        break;
-      case 'm':
-      case 'M':
-        lightUp(LM);
-        break;
-      case 'n':
-      case 'N':
-        lightUp(LN);
-        break;
-      case 'o':
-      case 'O':
-        lightUp(LO);
-        break;
-      case 'p':
-      case 'P':
-        lightUp(LP);
-        break;
-      case 'q':
-      case 'Q':
-        lightUp(LQ);
-        break;
-      case 'r':
-      case 'R':
-        lightUp(LR);
-        break;
-      case 's':
-      case 'S':
-        lightUp(LS);
-        break;
-      case 't':
-      case 'T':
-        lightUp(LT);
-        break;
-      case 'u':
-      case 'U':
-        lightUp(LU);
-        break;
-      case 'v':
-      case 'V':
-        lightUp(LV);
-        break;
-      case 'w':
-      case 'W':
-        lightUp(LW);
-        break;
-      case 'x':
-      case 'X':
-        lightUp(LX);
-        break;
-      case 'y':
-      case 'Y':
-        lightUp(LY);
-        break;
-      case 'z':
-      case 'Z':
-        lightUp(LZ);
-        break;
-      default:
-        break;
-    }
+	
+	String str = String(inchar);
+    
+	int index = decodeKey.indexOf(str);
+	
+	lightUp(index, normalDelayVal);
   }
-  */
+  else
+  {
+	for(int i = 0; i < 10; ++i)
+	{
+		for(int ii = 0; ii < messages[i].length(); ++ii)
+		{
+			int index = decodeKey.indexOf(messages[i][ii]);
+			if(i < 7)
+			{
+				lightUp(index, normalDelayVal);
+			}
+			else
+			{
+				lightUp(index, 150);
+			}
+		}
+		delay(5000);
+	}
+  }
+  
 }
 
 //void lightUp(CHAR_LEDS charIndex)
