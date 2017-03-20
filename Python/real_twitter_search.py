@@ -22,10 +22,10 @@ def oauth_req(url, key, secret, http_method="GET", post_body="", http_headers=No
     resp, content = client.request( url, method=http_method, body=post_body, headers=http_headers )
     return content
 
-serialPort = serial.Serial('/dev/ttyUSB0', 115200, timeout = 10)
+serialPort = serial.Serial('/dev/ttyUSB2', 115200, timeout = 10)
 
 #Tests serial port communication with a themed message on startup
-serialPort.write("Welcome to the upside down")
+#serialPort.write("Welcome to the upside down")
 
 #Run the program forever
 while(True):
@@ -52,7 +52,10 @@ while(True):
             
                 for character in clean_text:
                     print character
-                    serialPort.write(character)
+                    try:
+                        serialPort.write(character.encode())
+                    except:
+                        pass
                     sleep(0.75)
     except KeyError: #We don't care about handling errors. We cannot display them to the wall anyways
         print "Retweeted_Status not found"

@@ -20,7 +20,7 @@ String messages[10] = {
   "RUN AWAY",
   "STRANGER THINGS",
   "LOOK BEHIND YOU",
-  "UPB COLLEGECON",
+  "HASHTAG US",
   "HELP ME",
   "I HAVE BARB",
   "ITS WILL",
@@ -28,6 +28,7 @@ String messages[10] = {
   "ZYXWVUTSRQPONMLKJIHGFEDCBA",
   "ABCDEFGHQPONMLKJIRSTUVWXYZ"
 };
+String message = String("HASHTAG US");
 
 int normalDelayVal = 1000; // delay for a second
 
@@ -47,35 +48,27 @@ void setup()
 void loop()
 {
  
-  if (Serial.available() > 0)
-  {
-    char inchar = Serial.read();
-	
-	String str = String(inchar);
-    
-	int index = decodeKey.indexOf(str);
-	
-	lightUp(index, normalDelayVal);
-  }
-  else
-  {
-	for(int i = 0; i < 10; ++i)
+	if (Serial.available() > 0)
 	{
-		for(int ii = 0; ii < messages[i].length(); ++ii)
-		{
-			int index = decodeKey.indexOf(messages[i][ii]);
-			if(i < 7)
-			{
-				lightUp(index, normalDelayVal);
-			}
-			else
-			{
-				lightUp(index, 150);
-			}
-		}
-		delay(5000);
+		char inchar = Serial.read();
+		
+		String str = String(inchar);
+		
+		int index = decodeKey.indexOf(str);
+		
+		lightUp(index, normalDelayVal);
 	}
-  }
+	else
+	{
+		for(int ii = 0; ii < message.length(); ++ii)
+		{
+			int index = decodeKey.indexOf(message[ii]);
+			
+			lightUp(index, normalDelayVal);
+		}
+	}
+	
+	delay(1500);
   
 }
 
